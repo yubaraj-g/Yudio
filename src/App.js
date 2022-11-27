@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import Nav from "./components/Nav"
+import Search from "./components/Search"
+import Results from "./components/Results"
+import Fetched from "./components/Fetched"
+import Miniplayer from "./components/Miniplayer"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-gray-800 h-screen flex flex-col items-center">
+      <Nav />
+      <div className="px-6 md:w-4/5 lg:w-4/5 w-full h-full mt-12 md:mt-16 lg:mt-16">
+        <Search />
+        <Results />
+        <Fetched />
+        <Miniplayer />
+      </div>
     </div>
   );
 }
