@@ -3,7 +3,12 @@ import thumbnail from "../img/thumbnail.jpg";
 import { useGlobalContext } from "../data/context";
 
 const Results = () => {
-  const { activity, type, isLoading, key } = useGlobalContext();
+  const { isLoading, items } = useGlobalContext();
+
+  const fetchMusic = (ev) => {
+    let vID = ev.currentTarget.id;
+    console.log(vID);
+  };
 
   if (isLoading) {
     return (
@@ -14,23 +19,46 @@ const Results = () => {
   }
 
   return (
-    <div className="flex flex-col gap-2 p-2 w-3/4 mx-auto mb-8">
-      <div className="w-full flex flex-col mx-auto md:flex-row lg:flex-row gap-6 justify-between border rounded border-gray-500 p-6">
-        <picture className="w-full md:w-1/2 lg:w-1/2">
-          <img
-            src={thumbnail}
-            alt="dummy-thumbnail"
-            className="w-full object-fill h-full"
-          />
-        </picture>
+    <>
+      {items.map((content) => {
+        return (
+          <div
+            className="flex flex-col gap-2 p-2 w-3/4 mx-auto mb-0"
+            // key={content.id.videoId}
+            key={items.indexOf(content)}
+            id={items.indexOf(content)}
+            // id={content.id.videoId}
+            onClick={fetchMusic}
+          >
+            <div className="w-full flex flex-col mx-auto bg-gray-900 md:flex-row lg:flex-row gap-6 justify-between border rounded border-gray-500 p-6">
+              <picture className="w-full md:w-1/2 lg:w-1/2">
+                <img
+                  // src={content.snippet.thumbnails.medium.url}
+                  src={thumbnail}
+                  alt="video-thumbnail"
+                  className="w-full object-cover h-full"
+                />
+              </picture>
 
-        <div className="flex flex-col text-white justify-between gap-4">
-          <h2 className="title font-bold">{activity}</h2>
-          <h6 className="channel text-sm">Channel type: {type}</h6>
-          <h6 className="channel text-sm">Key ID: {key}</h6>
-        </div>
-      </div>
-    </div>
+              <div className="flex flex-col text-white justify-between gap-4 w-full md:w-1/2 lg:w-1/2">
+                <h2 className="title font-bold text-lg">
+                  {/* {content.snippet.title} */}
+                  {content.Description}
+                </h2>
+                <h6 className="channel text-sm font-semibold">
+                  {/* {content.snippet.channelTitle} */}
+                  {content.API}
+                </h6>
+                <h6 className="channel text-sm">
+                  {/* Published At : {content.snippet.publishTime} */}
+                  Published At : {content.Category}
+                </h6>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 

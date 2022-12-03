@@ -7,7 +7,7 @@ import Miniplayer from "./components/Miniplayer"
 
 function App() {
   return (
-    <div className="bg-gray-800 h-screen flex flex-col items-center">
+    <div className="bg-gray-800 h-screen flex flex-col items-center bg-no-repeat bg-fixed">
       <Nav />
       <div className="px-6 md:w-4/5 lg:w-4/5 w-full h-full mt-12 md:mt-16 lg:mt-16">
         <Search />

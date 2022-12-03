@@ -5,17 +5,22 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from './reducer';
 
-const AppContext = createContext();
+const AppContext = createContext();       // context created
 
 
-let API = "https://www.boredapi.com/api/activity?";
+// let key = "AIzaSyAGhaiUoCJ2lH2ZagnY1Momqflrt7CLQ0A";
+// let query = "codewithharry"
+
+// let API = `https://www.googleapis.com/youtube/v3/search?key=${key}&type=video&videoEmbeddable=any&maxResults=10&order=relevance&part=snippet&q=`;
+let API = `https://api.publicapis.org/`;
+
 let data = null;
 
 const initialState = {
-    isLoading: true,
-    activity: 'Loading...',
-    type: 'Loading...',
-    key: 'Loading...'
+    loadingState: true,
+    // query: "",
+    query: "entries",
+    items: [],
 }
 
 const AppProvider = ({ children }) => {
@@ -38,9 +43,7 @@ const AppProvider = ({ children }) => {
                 type: "getData",
                 payload: {
                     isLoading: false,
-                    activity: data.activity,
-                    type: data.type,
-                    key: data.key
+                    items: data.entries
                 }
             })
 
@@ -49,15 +52,33 @@ const AppProvider = ({ children }) => {
         }
     }
 
+    const searchFunc = (typed) => {
+        dispatch({
+            type: "searchFunction",
+            payload: typed
+        })
+        // fetchApiData(API + state.query);
+    }
+
+    // const fetchMusic = () => {
+
+    // }
+
 
     useEffect(() => {
-        fetchApiData(API);
+        // fetchApiData(`${API}${state.pin}`);
+        fetchApiData(API + state.query);
+        console.log(API + state.query);
     }, []);
 
+    const searchFunc2 = (typed) => {
+        fetchApiData(API + typed);
+        console.log("typed: " + typed);
+    }
 
     return (
 
-        <AppContext.Provider value={{ ...state }}>
+        <AppContext.Provider value={{ ...state, searchFunc, searchFunc2 }}>
             {children}
         </AppContext.Provider>
 

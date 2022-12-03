@@ -9,11 +9,19 @@ const reducer = (state, action) => {
 
         case "getData":
             return {
-                // ...state,
+                ...state,
                 isLoading: false,
-                activity: action.payload.activity,
-                type: action.payload.type,
-                key: action.payload.key
+                // videoTitle: action.payload.items[0].videoTitle,
+                // channelTitle: action.payload.items[0].channelTitle,
+                // publishedAt: action.payload.items[0].publishedAt,
+                // thumbnail: action.payload.items[0].thumbnail
+                items: action.payload.items
+            }
+
+        case "searchFunction":
+            return {
+                ...state,
+                query: action.payload
             }
 
         default:
