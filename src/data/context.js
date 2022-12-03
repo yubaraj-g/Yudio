@@ -17,10 +17,11 @@ let API = `https://api.publicapis.org/`;
 let data = null;
 
 const initialState = {
-    loadingState: true,
+    isLoading: true,
     // query: "",
     query: "entries",
     items: [],
+    error: false
 }
 
 const AppProvider = ({ children }) => {
@@ -49,6 +50,13 @@ const AppProvider = ({ children }) => {
 
         } catch (error) {
             console.log(error);
+            dispatch({
+                type: "error",
+                payload: {
+                    isLoading: false,
+                    error: true
+                }
+            })
         }
     }
 

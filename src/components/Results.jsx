@@ -3,7 +3,7 @@ import thumbnail from "../img/thumbnail.jpg";
 import { useGlobalContext } from "../data/context";
 
 const Results = () => {
-  const { isLoading, items } = useGlobalContext();
+  const { isLoading, items, error } = useGlobalContext();
 
   const fetchMusic = (ev) => {
     let vID = ev.currentTarget.id;
@@ -13,9 +13,17 @@ const Results = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-2 p-2 w-3/4 mx-auto mb-8">
-        <h1 className="text-white font-bold text-2xl">Loading...</h1>
+        <h1 className="text-gray-300 font-bold text-2xl">Loading...</h1>
       </div>
     );
+  }
+
+  if (error === true) {
+    return (
+      <div className="flex flex-col gap-2 p-2 w-3/4 mx-auto mb-8">
+        <h1 className="text-gray-400 font-bold text-2xl">API fetch error or No results available!</h1>
+      </div>
+    )
   }
 
   return (

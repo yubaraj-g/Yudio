@@ -23,6 +23,13 @@ const reducer = (state, action) => {
                 ...state,
                 query: action.payload
             }
+        
+        case "error":
+            return {
+                ...state,
+                isLoading: false,
+                error: true
+            }
 
         default:
             return { ...state }
