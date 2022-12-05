@@ -24,11 +24,30 @@ const reducer = (state, action) => {
                 query: action.payload
             }
         
+        case "GET_VID_ID":
+            return {
+                ...state,
+                vidID: action.payload
+            }
+        
+        case "RAPID_API_DATA":
+            return {
+                ...state,
+                link: action.payload.link,
+                duration: action.payload.duration
+            }
+        
         case "error":
             return {
                 ...state,
                 isLoading: false,
-                error: true
+                error: action.payload.error
+            }
+
+        case "error2":
+            return {
+                ...state,
+                error2: action.payload.error
             }
 
         default:
