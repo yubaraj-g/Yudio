@@ -1,3 +1,5 @@
+# Music Player App (ReactJs) with Youtube Data API integrated to search and play music but still needs to be developed completely, for now the app can play music, need to fix the UI a bit.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
