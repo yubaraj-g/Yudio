@@ -23,20 +23,33 @@ const reducer = (state, action) => {
                 ...state,
                 query: action.payload
             }
-        
+
         case "GET_VID_ID":
             return {
                 ...state,
                 vidID: action.payload
             }
-        
+
+        // case "SHOW_RESULTS":
+        //     return {
+        //         ...state,
+        //         showRes: action.payload
+        //     }
+
         case "RAPID_API_DATA":
             return {
                 ...state,
                 link: action.payload.link,
                 duration: action.payload.duration
             }
-        
+
+        case "SELECTED_VIDEO_OBJ":
+            return {
+                ...state,
+                isLoading: action.payload.isLoading,
+                selectedVid: action.payload.selectedVid
+            }
+
         case "error":
             return {
                 ...state,

@@ -3,31 +3,31 @@
 // useContext hook
 
 import React, { createContext, useContext, useEffect, useReducer } from "react";
+import { useState } from "react";
 import reducer from './reducer';
 
 const AppContext = createContext();       // context created
 
 
-let key = "AIzaSyAGhaiUoCJ2lH2ZagnY1Momqflrt7CLQ0A";
-// let query = "codewithharry"
+let key = process.env.REACT_APP_YT_DATA_KEY;
 
 let API = `https://www.googleapis.com/youtube/v3/search?key=${key}&type=video&videoEmbeddable=any&maxResults=10&order=relevance&part=snippet&q=`;
-// let API = `https://api.publicapis.org/`;
 
-let API2 = `https://youtube-mp36.p.rapidapi.com/dl?`;
-let key2 = `69f5cb7645msh691471cdb002ff6p122dfcjsne1b8a26b6d54`;
+let API2 = `https://youtube-mp36.p.rapidapi.com/dl?`; // RAPID API convert video to mp3
+let key2 = process.env.REACT_APP_RAPID_KEY;
 
 let data = null;
 let data2 = null;
 
 const initialState = {
-    isLoading: true,
+    isLoading: false,
     query: "",
     // query: "entries",
     items: [],
     error: false,
     link: '',
-    duration: 0
+    duration: 0,
+    selectedVid: {}
 }
 
 const AppProvider = ({ children }) => {
@@ -37,13 +37,15 @@ const AppProvider = ({ children }) => {
     const fetchApiData = async (url) => {
 
         dispatch({
-            type: "loadingState"
+            type: "loadingState",
+            payload: {
+                isLoading: true
+            }
         })
 
         try {
             const result = await fetch(url);
             data = await result.json();
-
             // console.log(data);
 
             dispatch({
@@ -75,17 +77,27 @@ const AppProvider = ({ children }) => {
     }
 
 
-    useEffect(() => {
-        // fetchApiData(`${API}${state.pin}`);
-        fetchApiData(API + state.query);
-        // console.log(API + state.query);
-    }, []);
+    // useEffect(() => {
+    //     // fetchApiData(`${API}${state.pin}`);
+    //     fetchApiData(API + state.query);
+    //     // console.log(API + state.query);
+    // }, []);
 
     const searchFunc2 = (typed) => {
         fetchApiData(API + typed);
-        console.log("typed: " + typed);
+        // console.log("typed: " + typed);
     }
 
+    // const [showRes, setShowRes] = useState(0)
+    // const showResults = (param) => {
+    //     setShowRes(param)
+    //     dispatch({
+    //         type: "SHOW_RESULTS",
+    //         payload: param
+    //     })
+    // }
+
+    // get the video ID of selected video ---------------------------------------------------------
     const getVideoID = (vid) => {
         dispatch({
             type: "GET_VID_ID",
@@ -93,11 +105,11 @@ const AppProvider = ({ children }) => {
         })
     }
 
+    // Convert the video to mp3 start --------------------------------------------------------------
     const callRapidAPI = async (url2) => {
         try {
             const result = await fetch(url2);
             data2 = await result.json();
-
             // console.log(data2);
 
             dispatch({
@@ -120,15 +132,23 @@ const AppProvider = ({ children }) => {
     }
 
     const convertVideo = (vid2) => {
-
         callRapidAPI(API2 + 'rapidapi-key=' + key2 + '&id=' + vid2);
-        // console.log(API2 + 'rapidapi-key=' + key2 + '&id=' + vid2);
+    }
+    // Convert the video to mp3 close ------------------------------------------------------------------------
 
+    const selectedVideo = (obj) => {
+        // console.log(array)
+        dispatch({
+            type: "SELECTED_VIDEO_OBJ",
+            payload: {
+                isLoading: false,
+                selectedVid: obj
+            }
+        })
     }
 
     return (
-
-        <AppContext.Provider value={{ ...state, searchFunc, searchFunc2, getVideoID, convertVideo }}>
+        <AppContext.Provider value={{ ...state, searchFunc, searchFunc2, getVideoID, convertVideo, selectedVideo }}>
             {children}
         </AppContext.Provider>
 
